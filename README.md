@@ -16,7 +16,7 @@
        
 ### - список в условии   
 ```python
-    wc_zones = u"LENTA_ID IN ('{0}')".format(u"','".join([id for id in list]))
+    wc_zones = u"ID IN ('{0}')".format(u"','".join([id for id in list]))
 ```
 
 ### - сцепить список в одну строку
