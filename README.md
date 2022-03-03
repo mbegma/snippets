@@ -1,92 +1,386 @@
-# gis_snippets
-
-Куски кода на python для использования
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+# Python and ArcPy snippets   
+   
+## Python  
+    
+### - создаем список
+```python
+    q_list = [1, 2, 3]   
+    q_list = [str(q) for q in q_list]   
+``` 
+    
+### - переводим список в строку через запятую   
+```python
+    q_list_str = u"'{0}'".format("', '".join([q for q in q_list]))
+    str_list = f"{', '.join([str(_['num']) for _ in obj_list])}"
 ```
-cd existing_repo
-git remote add origin https://gitlab.dataplus.ru/dataplus/gis/gis_snippets.git
-git branch -M main
-git push -uf origin main
+       
+### - список в условии   
+```python
+    wc_zones = u"LENTA_ID IN ('{0}')".format(u"','".join([id for id in list]))
 ```
 
-## Integrate with your tools
+### - сцепить список в одну строку
+```python
+    characters = ['p', 'y', 't', 'h', 'o', 'n']
+    word = "".join(characters)
+    print(word) # python    
+```    
+   
+### - создание словаря из известного набора ключей с фиксированым значением   
+```python
+# you can you use dictionary comprehensions:
+    keys = ['a', 'b', 'c']
+    {k: True for k in keys}
+>>> {'a': True, 'b': True, 'c': True}
+# However, the dict class has the fromkeys classmethod designed specially for this case:
+    dict.fromkeys(keys, True)
+>>> {'a': True, 'b': True, 'c': True}    
+```        
 
-- [ ] [Set up project integrations](https://gitlab.dataplus.ru/dataplus/gis/gis_snippets/-/settings/integrations)
+### - строка из списка:   
+```python
+    fields = [u'GLOBALID', u'NAME']
+    fields_name=', '.join(item for item in fields)
+```   
+   
+### - строка из случайных символов
+```python
+    import string
+    import random
+    name = ''.join([random.choice(string.ascii_uppercase) for _ in range(6)])   
+```
+   
+### - datetime из строки
+```python
+    datetime.datetime.strptime('2019-09-17 15:20:35.123', '%Y-%m-%d %H:%M:%S.%f')
+```
+   
+### - строка из datetime
+```python
+    datetime_str = <datetime object>.strftime('%Y-%m-%d %H:%M:%S.%f') -> '2019-09-17 15:20:35.123'
+```
+     
+### - форматирование строки с лидирующими нулями
+```python
+    print '{0:05d}'.format(i) -> 000001
+```
+    
+### - форматирование в Python 3
+```python
+    print(f"{'Username'}:25}{'Role':20}{'License Type'}")
+    print(f"{'-' * 23}{' ' * 2}{'-' * 18}{' ' * 2}{'-' * 15}")
+    for user in user_list:
+        print(f"{user.username:25}{user.role:20}{user.userLicenseTypeId}")
+```
+       
+### - кодировки   
+```python
+    from os import environ
+    environ['NLS_LANG'] = 'RUSSIAN_CIS.CL8MSWIN1251'
+    environ['NLS_LANG'] = 'American_America.AL32UTF8'    
+```
+   
+### - сохранение в файл
+```python
+    def save_to_file(file_name, data):
+        with open(file_name, 'a') as f:
+            f.write('{0}\n'.format(data))
+            # log_file.write('{0}\n'.format(message.encode('cp1251')))     
+```   
+   
+### - работа с именованными (keyword) аргументами   
+```python
+# **kwargs (https://realpython.com/python-kwargs-and-args/)
+    def test(**kwargs):
+        print kwargs['a']
+        print kwargs['b']
+    
+test(a='asdf', b='zxcv')
+>>asdf
+>>zxcv
+```
+   
+### - progress bar
+```python
+    import time
+    from progress.bar import IncrementalBar
+        mylist = [1,2,3,4,5,6,7,8]
+        bar = IncrementalBar('Countdown', max = len(mylist))
+        for item in mylist:
+            bar.next()
+            time.sleep(1)
+        bar.finish()   
+```
+   
+### - еще пример progressbar 
+```python
+    from tqdm import tqdm
 
-## Collaborate with your team
+    def do_download():
+        pbar = tqdm(desc='{}_{}'.format(track.get_type(), track.id), total=int(file_size), unit="bytes", unit_scale=True, position=bar_position)
+        downloaded_size = 0
+        with open(output_file, 'wb') as fd:
+            try:
+                r = self.client.get_track_download(track)
+                for chunk in r.iter_content(1024):
+                    fd.write(chunk)
+                    downloaded_size += len(chunk)
+                    pbar.update(len(chunk))
+            except requests.RequestException as e:
+                self.logger.debug("requests download error for track {}_{}, exiting".format(track.get_type(), track.id))
+                exit(1)
+            except:
+                exit(1)
+        pbar.close()   
+```   
+   
+### - копирование папки с сохранением структуры
+```python
+    def copytree(src, dst, symlinks=False, ignore=None):
+        for item in os.listdir(src):
+            s = os.path.join(src, item)
+            d = os.path.join(dst, item)
+            if os.path.isdir(s):
+                shutil.copytree(s, d, symlinks, ignore)
+            else:
+                shutil.copy2(s, d)   
+```       
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### - проверка XML на соответствие схеме    
+```python        
+    try:
+        xmlschema.assertValid(xml_to_validate)
+    except etree.DocumentInvalid, xml_errors:
+        pass
+    print "List of errors:\r\n", xml_errors.error_log
 
-## Test and Deploy
+    try:
+       xmlschema_doc = lxml.etree.parse(filename)
+       xmlschema = lxml.etree.XMLSchema(xmlschema_doc)
+       xmlschema.assertValid(elem_tree)
+    except lxml.etree.ParseError as e:
+       raise lxml.etree.ParserError(str(e))
+    except lxml.etree.DocumentInvalid as e:
+       if ignore_errors:
+        raise lxml.etree.ValidationError("The Config tree is invalid with error message:\n\n" + str(e)) 
+```
 
-Use the built-in continuous integration in GitLab.
+### - Работа с итератором
+```python
+    iterator = iter(iterable)
+    try:
+        while True:
+            item = next(iterator)
+            do_stuff(item)
+    except StopIteration:
+        pass
+    finally:
+        del iterator 
+```
+    
+### - кастомный класс ошибки
+```python    
+    class MyCustomError(Exception):
+        def __init__(self, *args):
+            if args:
+                self.message = args[0]
+            else:
+                self.message = None
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+        def __str__(self):
+            print('calling str')
+            if self.message:
+                return 'MyCustomError, {0} '.format(self.message)
+            else:
+                return 'MyCustomError has been raised'
 
-***
+# raise MyCustomError
+raise MyCustomError('We have a problem')
+```
+   
+### - пример создания dataclass (Python 3.7 and over)
+```python
+    from dataclasses import dataclass
+    from typing import List
 
-# Editing this README
+    @dataclass
+    class Sale:
+        quantity: int
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+    @dataclass
+    class Product:
+        id: str
+        name: str
+        sales: List[Sale]
+```
+       
+---
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## ArcPy & ArcGIS   
+    
+### - работа с тулбоксом
+```python    
+    # При обновлении набора инструментов Python происходит обновление только самого файла 
+    # набора инструментов — импортированные в его состав модули не затрагиваются. 
+    # Для перезагрузки модуля из набора инструментов Python используйте функцию importlib модуля reload, 
+    # которая может быть временно добавлена.
+    import yourmodule
+    import importlib
+    importlib.reload(yourmodule)  # force reload of the module 
+```
+    
+### - нотации: математическая, геодезическая    
+- X - Долгота (на восток)   
+- Y - Широта (на север)   
+   
+### - создание полей в feature class или table   
+```python
+    fields = [
+        ("NUMBER", "LONG", "", "", "", "Порядковый номер", "NULLABLE", "NON_REQUIRED", ""), 
+        ("class", "SHORT", "", "", "", "class", "NULLABLE", "NON_REQUIRED", ""),
+        ("LAT", "TEXT", "", "", 64, "Широта", "NULLABLE", "NON_REQUIRED", ""),
+        ("LON", "TEXT", "", "", 64, "Долгота", "NULLABLE", "NON_REQUIRED", ""),
+        ("X", "TEXT", "", "", 64, "X", "NULLABLE", "NON_REQUIRED", ""),
+        ("Y", "TEXT", "", "", 64, "Y", "NULLABLE", "NON_REQUIRED", ""), 
+        ("status_date", "DATE", "", "", "", "status_date", "NULLABLE", "NON_REQUIRED", "")
+    ]
+    for field in fields:
+        arcpy.AddField_management(*(self.memory_table,) + field)    
+```   
 
-## Name
-Choose a self-explaining name for your project.
+### - работа с курсорами (Cursor)   
+```python 
+    with arcpy.da.SearchCursor(fc, ['fieldA', 'fieldB']) as cursor:
+        for row in cursor:
+            print(row)
+        
+    with arcpy.da.UpdateCursor("c:/base/data.gdb/roads", ["roadtype", "distance"]) as cursor:
+        for row in cursor:
+            row[1] = row[0] * 100
+            cursor.updateRow(row)
+        
+    with arcpy.da.InsertCursor(fc, ['ID', 'USER_NAME', 'CREATE_DATE', 'FORM_TYPE']) as ins_cursor:
+        ins_cursor.insertRow((_id, _user_name, _today, _form_type))
+```  
+   
+### - проверить есть ли записи в курсоре
+```python
+    if any(arcpy.da.SearchCursor(FeatureClass, fieldnames, whereClause)):
+        есть
+    else:
+        нет
+```    
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### - узнать количество записей в курсоре   
+```python
+# способ 1:
+    with arcpy.da.SearchCursor(FeatureClass, fieldnames, where_clause) as srcToday:
+        count = sum(1 for row in srcToday)
+# способ 2:
+    featureList = [row[0] for row in arcpy.da.SearchCursor(FeatureClass, fieldnames, where_clause) ]
+    count = len(featureList)
+```
+    
+### - работа с Редактором (Editor)
+```python
+edit = arcpy.da.Editor(sdeconnection)
+try:
+    edit.startEditing()
+    edit.startOperation()
+    # непосредственно операции
+    with arcpy.da.InsertCursor(fc, fields) as fc_icursor:
+        fc_icursor.insertRow(someNewRow)
+    edit.stopOperation()
+    edit.stopEditing(True)  ## Stop the edit session with True to save the changes
+except Exception as err:
+    if edit.isEditing:
+        edit.stopOperation()
+        edit.stopEditing(False)  ## Stop the edit session with False to abandon the changes
+finally:
+    # Cleanup
+    arcpy.ClearWorkspaceCache_management()‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍
+```
+    
+### - получение JSON в ArcMap
+```python 
+import arcpy
+lyr = 'lyr'
+arcpy.MakeFeatureLayer_management(<Название класса>, lyr)
+arcpy.FeatureSet(lyr).JSON
+```
+   
+### - список полей в таблице raw_table
+```python
+exclude_flds = ['OBJECTID']
+raw_table_flds = [fld.name for fld in arcpy.ListFields(raw_table) if fld.name not in exclude_flds]
+print (raw_table_flds)
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### - расчет в поле автоинкримента (ArcMap)   
+```python
+rec=0 
+def autoIncrement(): 
+    global rec 
+    pStart = 1  
+    pInterval = 1 
+    if (rec == 0):  
+        rec = pStart  
+    else:  
+        rec += pInterval  
+    return rec
+```
+       
+### - расчет в поле GUID (ArcMap)    
+```python
+def calc():
+    from uuid import uuid4
+    return u'{{{0}}}'.format(uuid4()).upper()
+```
+### - случайное значение из диапазона (ArcMap)
+```python
+def get_val(val):
+    import random
+    random_val = random.randint(-10,10)
+    if val != 0:
+        return val + random_val
+    else:
+        return val
+        
+def get_val(val):
+    import random
+    random_val = random.randint(-50000,50000)
+    if val != 0:
+        ret_val = val + random_val
+        if ret_val < 0:
+            return abs(ret_val)
+        else:
+            return ret_val
+    else:
+        return val
+```
+   
+### - сдвиг точки на угол и расстояние FieldCalculator (shiftXYCoordinates(!SHAPE!, !Angle! ,5000))
+```python
+def shiftXYCoordinates(shape,angle,distance):
+    point = shape.getPart(0)
+    point.Y += distance * math.cos(math.radians(angle))
+    point.X += distance * math.sin(math.radians(angle))
+    return point     
+```
+   
+   
+---   
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+# PANDAS
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### - класс ArcGIS в датафрейм
+```python
+import pandas
+fc = # path to feature class
+df = pandas.DataFrame(
+    arcpy.da.FeatureClassToNumPyArray(
+        fc,
+        [fld.name for fld in arcpy.ListFields(fc) if fld.name != arcpy.Describe(fc).shapeFieldName]
+    )
+)
+```    
