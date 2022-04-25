@@ -275,17 +275,15 @@ print(item.total_cost())    # 1200
 ### - создание полей в feature class или table   
 ```python
     fields = [
-        ("NUMBER", "LONG", "", "", "", "Порядковый номер", "NULLABLE", "NON_REQUIRED", ""), 
-        ("class", "SHORT", "", "", "", "class", "NULLABLE", "NON_REQUIRED", ""),
-        ("LAT", "TEXT", "", "", 64, "Широта", "NULLABLE", "NON_REQUIRED", ""),
-        ("LON", "TEXT", "", "", 64, "Долгота", "NULLABLE", "NON_REQUIRED", ""),
-        ("X", "TEXT", "", "", 64, "X", "NULLABLE", "NON_REQUIRED", ""),
-        ("Y", "TEXT", "", "", 64, "Y", "NULLABLE", "NON_REQUIRED", ""), 
-        ("status_date", "DATE", "", "", "", "status_date", "NULLABLE", "NON_REQUIRED", "")
+        ("LONG", "LONG", "", "", "", "Длинное целое", "NULLABLE", "NON_REQUIRED", ""), 
+        ("SHORT", "SHORT", "", "", "", "Короткое целое", "NULLABLE", "NON_REQUIRED", ""),
+        ("TEXT", "TEXT", "", "", 64, "Текст", "NULLABLE", "NON_REQUIRED", ""),
+        ("DOUBLE", "DOUBLE", 15, 8, "", "С плавающей точкой", "NULLABLE", "NON_REQUIRED", ""),
+        ("DATE", "DATE", "", "", "", "Дата", "NULLABLE", "NON_REQUIRED", "")
     ]
     for field in fields:
         arcpy.AddField_management(*(self.memory_table,) + field)    
-```   
+``` 
 
 ### - работа с курсорами (Cursor)   
 ```python 
