@@ -39,8 +39,7 @@
 
 ### - строка из списка:   
 ```python
-    fields = [u'GLOBALID', u'NAME']
-    fields_name=', '.join(item for item in fields)
+    fields_name=', '.join(item for item in [u'ID', u'NAME'])
 ```   
    
 ### - строка из случайных символов
@@ -48,6 +47,18 @@
     import string
     import random
     name = ''.join([random.choice(string.ascii_uppercase) for _ in range(6)])   
+```
+
+### - строка из чисел
+```python
+def concat_as_numbers(lst: list) -> str:
+    return ', '.join(map(str, lst))
+```
+
+###  - строка из строк
+```python
+def concat_as_strings(lst: list) -> str:
+    return ", ".join(map(lambda x: f"'{x}'", lst))
 ```
    
 ### - datetime из строки
@@ -213,8 +224,36 @@ raise MyCustomError('We have a problem')
         name: str
         sales: List[Sale]
 ```
-       
+---          
+```python
+    from dataclasses import dataclass
+
+    @dataclass
+    class InventoryItem:
+        name: str
+        unit_price: float
+        quantity: int = 0
+
+        def total_cost(self) -> float:
+            return self.unit_price * self.quantity
+
+item = InventoryItem(name="", unit_price=12, quantity=100)
+print(item.total_cost())    # 1200
+```       
+   
+### - сохранение / загрузка json данных 
+```python
+    import json
+    with open(<dump_file_name>, 'w', encoding='utf-8') as outfile:    
+        json.dump(<data_dict>, outfile, ensure_ascii=False)   
+        
+    with open(<dump_file_name>) as json_file:
+        data = json.load(json_file)
+```
+   
+   
 ---
+---   
 
 ## ArcPy & ArcGIS   
     
@@ -261,6 +300,9 @@ raise MyCustomError('We have a problem')
         
     with arcpy.da.InsertCursor(fc, ['ID', 'USER_NAME', 'CREATE_DATE', 'FORM_TYPE']) as ins_cursor:
         ins_cursor.insertRow((_id, _user_name, _today, _form_type))
+        # получение OBJECTID вставленного объекта
+        ioid = ins_cursor.insertRow((_id, _user_name, _today, _form_type))
+        print(ioid)
 ```  
    
 ### - проверить есть ли записи в курсоре
@@ -285,7 +327,7 @@ raise MyCustomError('We have a problem')
 ```python
 edit = arcpy.da.Editor(sdeconnection)
 try:
-    edit.startEditing()
+    edit.startEditing(False, False)
     edit.startOperation()
     # непосредственно операции
     with arcpy.da.InsertCursor(fc, fields) as fc_icursor:
@@ -384,3 +426,4 @@ df = pandas.DataFrame(
     )
 )
 ```    
+    
