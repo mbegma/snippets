@@ -2,31 +2,37 @@
    
 ## Python  
     
-### - создаем список
+### создаем список
 ```python
     q_list = [1, 2, 3]   
     q_list = [str(q) for q in q_list]   
 ``` 
     
-### - переводим список в строку через запятую   
+### оставляет в списке, только уникальные значения   
+```python
+def do_uniq_values_in_list(lst):
+    return list(set(lst))
+```
+    
+### переводим список в строку через запятую   
 ```python
     q_list_str = u"'{0}'".format("', '".join([q for q in q_list]))
     str_list = f"{', '.join([str(_['num']) for _ in obj_list])}"
 ```
        
-### - список в условии   
+### список в условии   
 ```python
     wc_zones = u"ID IN ('{0}')".format(u"','".join([id for id in list]))
 ```
 
-### - сцепить список в одну строку
+### сцепить список в одну строку
 ```python
     characters = ['p', 'y', 't', 'h', 'o', 'n']
     word = "".join(characters)
     print(word) # python    
 ```    
    
-### - создание словаря из известного набора ключей с фиксированым значением   
+### создание словаря из известного набора ключей с фиксированым значением   
 ```python
 # you can you use dictionary comprehensions:
     keys = ['a', 'b', 'c']
@@ -37,46 +43,70 @@
 >>> {'a': True, 'b': True, 'c': True}    
 ```        
 
-### - строка из списка:   
+### строка из списка:   
 ```python
     fields_name=', '.join(item for item in [u'ID', u'NAME'])
 ```   
    
-### - строка из случайных символов
+### строка из случайных символов
 ```python
     import string
     import random
     name = ''.join([random.choice(string.ascii_uppercase) for _ in range(6)])   
 ```
 
-### - строка из чисел
+### строка из чисел
 ```python
 def concat_as_numbers(lst: list) -> str:
     return ', '.join(map(str, lst))
 ```
 
-###  - строка из строк
+### строка из строк
 ```python
 def concat_as_strings(lst: list) -> str:
     return ", ".join(map(lambda x: f"'{x}'", lst))
 ```
    
-### - datetime из строки
+### datetime из строки
 ```python
     datetime.datetime.strptime('2019-09-17 15:20:35.123', '%Y-%m-%d %H:%M:%S.%f')
 ```
    
-### - строка из datetime
+### строка из datetime
 ```python
     datetime_str = <datetime object>.strftime('%Y-%m-%d %H:%M:%S.%f') -> '2019-09-17 15:20:35.123'
 ```
      
-### - форматирование строки с лидирующими нулями
+### работа с датами в формате ISO-8601 YYYY-MM-DDTHH:mm:ss     
 ```python
-    print '{0:05d}'.format(i) -> 000001
+   import dateutil.parser
+   
+   datetime.datetime.strptime('2022-04-02 04:00:00.001', '%Y-%m-%d %H:%M:%S.%f').isoformat()
+   >> {str}'2022-04-02T04:00:00.001000'
+   
+   dateutil.parser.isoparse(datetime.datetime.strptime('2022-04-02 04:00:00.001', '%Y-%m-%d %H:%M:%S.%f').isoformat())
+   >> {datetime} 2022-04-02 04:00:00.001000
+   
+   dateutil.parser.isoparse('2022-04-02T04:00:00.001000Z')
+   >> {datetime} 2022-04-02 04:00:00.001000+00:00
+   
+```   
+      
+### форматирование строки с лидирующими нулями (только для int)
+```python
+    number = 1
+    print '{0:05d}'.format(number) -> 000001
+    # for Python 3.6+  with f-strings:
+    print(f"{number:05d}") -> 00001
 ```
     
-### - форматирование в Python 3
+### форматирование floats в f-string
+```python   
+    print(f"Пересечение: {a:.4f}, наклон: {b:.4f}")
+    print(f"y = {b:.4f}x + {a:.4f}")
+```
+   
+### форматирование в Python 3
 ```python
     print(f"{'Username'}:25}{'Role':20}{'License Type'}")
     print(f"{'-' * 23}{' ' * 2}{'-' * 18}{' ' * 2}{'-' * 15}")
@@ -84,14 +114,14 @@ def concat_as_strings(lst: list) -> str:
         print(f"{user.username:25}{user.role:20}{user.userLicenseTypeId}")
 ```
        
-### - кодировки   
+### кодировки   
 ```python
     from os import environ
     environ['NLS_LANG'] = 'RUSSIAN_CIS.CL8MSWIN1251'
     environ['NLS_LANG'] = 'American_America.AL32UTF8'    
 ```
    
-### - сохранение в файл
+### сохранение в файл
 ```python
     def save_to_file(file_name, data):
         with open(file_name, 'a') as f:
@@ -99,7 +129,7 @@ def concat_as_strings(lst: list) -> str:
             # log_file.write('{0}\n'.format(message.encode('cp1251')))     
 ```   
    
-### - работа с именованными (keyword) аргументами   
+### работа с именованными (keyword) аргументами   
 ```python
 # **kwargs (https://realpython.com/python-kwargs-and-args/)
     def test(**kwargs):
@@ -111,7 +141,7 @@ test(a='asdf', b='zxcv')
 >>zxcv
 ```
    
-### - progress bar
+### progress bar
 ```python
     import time
     from progress.bar import IncrementalBar
@@ -123,7 +153,7 @@ test(a='asdf', b='zxcv')
         bar.finish()   
 ```
    
-### - еще пример progressbar 
+### еще пример progressbar 
 ```python
     from tqdm import tqdm
 
@@ -145,7 +175,7 @@ test(a='asdf', b='zxcv')
         pbar.close()   
 ```   
    
-### - копирование папки с сохранением структуры
+### копирование папки с сохранением структуры
 ```python
     def copytree(src, dst, symlinks=False, ignore=None):
         for item in os.listdir(src):
@@ -157,7 +187,7 @@ test(a='asdf', b='zxcv')
                 shutil.copy2(s, d)   
 ```       
 
-### - проверка XML на соответствие схеме    
+### проверка XML на соответствие схеме    
 ```python        
     try:
         xmlschema.assertValid(xml_to_validate)
@@ -176,7 +206,7 @@ test(a='asdf', b='zxcv')
         raise lxml.etree.ValidationError("The Config tree is invalid with error message:\n\n" + str(e)) 
 ```
 
-### - Работа с итератором
+### работа с итератором
 ```python
     iterator = iter(iterable)
     try:
@@ -189,7 +219,7 @@ test(a='asdf', b='zxcv')
         del iterator 
 ```
     
-### - кастомный класс ошибки
+### кастомный класс ошибки
 ```python    
     class MyCustomError(Exception):
         def __init__(self, *args):
@@ -199,6 +229,7 @@ test(a='asdf', b='zxcv')
                 self.message = None
 
         def __str__(self):
+            # для Python 3 - неактуально
             print('calling str')
             if self.message:
                 return 'MyCustomError, {0} '.format(self.message)
@@ -209,7 +240,7 @@ test(a='asdf', b='zxcv')
 raise MyCustomError('We have a problem')
 ```
    
-### - пример создания dataclass (Python 3.7 and over)
+### пример создания dataclass (Python 3.7 and over)
 ```python
     from dataclasses import dataclass
     from typing import List
@@ -241,7 +272,7 @@ item = InventoryItem(name="", unit_price=12, quantity=100)
 print(item.total_cost())    # 1200
 ```       
    
-### - сохранение / загрузка json данных 
+### сохранение / загрузка json данных 
 ```python
     import json
     with open(<dump_file_name>, 'w', encoding='utf-8') as outfile:    
@@ -251,13 +282,12 @@ print(item.total_cost())    # 1200
         data = json.load(json_file)
 ```
    
-   
 ---
 ---   
 
 ## ArcPy & ArcGIS   
     
-### - работа с тулбоксом
+### работа с тулбоксом
 ```python    
     # При обновлении набора инструментов Python происходит обновление только самого файла 
     # набора инструментов — импортированные в его состав модули не затрагиваются. 
@@ -268,11 +298,11 @@ print(item.total_cost())    # 1200
     importlib.reload(yourmodule)  # force reload of the module 
 ```
     
-### - нотации: математическая, геодезическая    
+### нотации: математическая, геодезическая    
 - X - Долгота (на восток)   
 - Y - Широта (на север)   
    
-### - создание полей в feature class или table   
+### создание полей в feature class или table   
 ```python
     fields = [
         ("LONG", "LONG", "", "", "", "Длинное целое", "NULLABLE", "NON_REQUIRED", ""), 
@@ -282,10 +312,19 @@ print(item.total_cost())    # 1200
         ("DATE", "DATE", "", "", "", "Дата", "NULLABLE", "NON_REQUIRED", "")
     ]
     for field in fields:
-        arcpy.AddField_management(*(self.memory_table,) + field)    
-``` 
+        arcpy.AddField_management(*(<feature class/table>,) + field)    
+        
+    # еще один способ добавления полей (https://pro.arcgis.com/ru/pro-app/latest/tool-reference/data-management/add-fields.htm)
+    arcpy.management.AddFields(
+            <feature class/table>, 
+            [
+                ['school_name', 'TEXT', 'Name', 255, 'Hello world', ''], 
+                ['street_number', 'LONG', 'Street Number', None, 35, 'StreetNumDomain'],
+                ['year_start', 'DATE', 'Year Start', None, '2017-08-09 16:05:07', '']
+            ])        
+```   
 
-### - работа с курсорами (Cursor)   
+### работа с курсорами (Cursor)   
 ```python 
     with arcpy.da.SearchCursor(fc, ['fieldA', 'fieldB']) as cursor:
         for row in cursor:
@@ -303,15 +342,22 @@ print(item.total_cost())    # 1200
         print(ioid)
 ```  
    
-### - проверить есть ли записи в курсоре
+### удаление записи курсором
 ```python
-    if any(arcpy.da.SearchCursor(FeatureClass, fieldnames, whereClause)):
+    with arcpy.da.UpdateCursor(<feature_class>, ["OID@"], where_clause=<condition>) as update_cursor:
+        for row in update_cursor:
+            update_cursor.deleteRow()
+```
+   
+### проверить есть ли записи в курсоре
+```python
+    if any(arcpy.da.SearchCursor(FeatureClass, fieldnames, where_clause)):
         есть
     else:
         нет
 ```    
 
-### - узнать количество записей в курсоре   
+### узнать количество записей в курсоре   
 ```python
 # способ 1:
     with arcpy.da.SearchCursor(FeatureClass, fieldnames, where_clause) as srcToday:
@@ -321,62 +367,62 @@ print(item.total_cost())    # 1200
     count = len(featureList)
 ```
     
-### - работа с Редактором (Editor)
+### работа с Редактором (Editor)
 ```python
-edit = arcpy.da.Editor(sdeconnection)
-try:
-    edit.startEditing(False, False)
-    edit.startOperation()
-    # непосредственно операции
-    with arcpy.da.InsertCursor(fc, fields) as fc_icursor:
-        fc_icursor.insertRow(someNewRow)
-    edit.stopOperation()
-    edit.stopEditing(True)  ## Stop the edit session with True to save the changes
-except Exception as err:
-    if edit.isEditing:
+    edit = arcpy.da.Editor(sdeconnection)
+    try:
+        edit.startEditing(False, False)
+        edit.startOperation()
+        # непосредственно операции
+        with arcpy.da.InsertCursor(fc, fields) as fc_icursor:
+            fc_icursor.insertRow(someNewRow)
         edit.stopOperation()
-        edit.stopEditing(False)  ## Stop the edit session with False to abandon the changes
-finally:
-    # Cleanup
-    arcpy.ClearWorkspaceCache_management()‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍
+        edit.stopEditing(True)  ## Stop the edit session with True to save the changes
+    except Exception as err:
+        if edit.isEditing:
+            edit.stopOperation()
+            edit.stopEditing(False)  ## Stop the edit session with False to abandon the changes
+    finally:
+        # Cleanup
+        arcpy.ClearWorkspaceCache_management()‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍
 ```
     
-### - получение JSON в ArcMap
+### получение JSON в ArcMap
 ```python 
-import arcpy
-lyr = 'lyr'
-arcpy.MakeFeatureLayer_management(<Название класса>, lyr)
-arcpy.FeatureSet(lyr).JSON
+    import arcpy
+    lyr = 'lyr'
+    arcpy.MakeFeatureLayer_management(<Название класса>, lyr)
+    arcpy.FeatureSet(lyr).JSON
 ```
    
-### - список полей в таблице raw_table
+### список полей в таблице raw_table
 ```python
-exclude_flds = ['OBJECTID']
-raw_table_flds = [fld.name for fld in arcpy.ListFields(raw_table) if fld.name not in exclude_flds]
-print (raw_table_flds)
+    exclude_flds = ['OBJECTID']
+    raw_table_flds = [fld.name for fld in arcpy.ListFields(raw_table) if fld.name not in exclude_flds]
+    print (raw_table_flds)
 ```
 
-### - расчет в поле автоинкримента (ArcMap)   
+### расчет в поле автоинкримента (ArcMap)   
 ```python
-rec=0 
-def autoIncrement(): 
-    global rec 
-    pStart = 1  
-    pInterval = 1 
-    if (rec == 0):  
-        rec = pStart  
-    else:  
-        rec += pInterval  
-    return rec
+    rec=0 
+    def autoIncrement(): 
+        global rec 
+        pStart = 1  
+        pInterval = 1 
+        if (rec == 0):  
+            rec = pStart  
+        else:  
+            rec += pInterval  
+        return rec
 ```
        
-### - расчет в поле GUID (ArcMap)    
+### расчет в поле GUID (ArcMap)    
 ```python
 def calc():
     from uuid import uuid4
     return u'{{{0}}}'.format(uuid4()).upper()
 ```
-### - случайное значение из диапазона (ArcMap)
+### случайное значение из диапазона (ArcMap)
 ```python
 def get_val(val):
     import random
@@ -399,7 +445,7 @@ def get_val(val):
         return val
 ```
    
-### - сдвиг точки на угол и расстояние FieldCalculator (shiftXYCoordinates(!SHAPE!, !Angle! ,5000))
+### сдвиг точки на угол и расстояние FieldCalculator (shiftXYCoordinates(!SHAPE!, !Angle! ,5000))
 ```python
 def shiftXYCoordinates(shape,angle,distance):
     point = shape.getPart(0)
@@ -408,20 +454,48 @@ def shiftXYCoordinates(shape,angle,distance):
     return point     
 ```
    
-   
+### определение расстояний между точками
+```python
+    import arcpy
+    sr = arcpy.SpatialReference(102100)   
+    p1 = arcpy.PointGeometry(arcpy.Point(11514992.9328,6642257.7652),sr)
+    p2 = arcpy.PointGeometry(arcpy.Point(11512492.9328,6639757.7652),sr)
+    a1,d1 = p1.angleAndDistanceTo(p2,'GEODESIC') # PLANAR
+    a2,d2 = p2.angleAndDistanceTo(p1,'GEODESIC') # PLANAR
+    print("Distance = {:8.3f} meters, Bearing1->2 = {:9.5f} degrees".format(d1,a1))
+    print("Distance = {:8.3f} meters, Bearing2->1 = {:9.5f} degrees".format(d2,a2))
+    >> Distance = 2221.212 meters, Bearing1->2 = -134.91526 degrees
+    >> Distance = 2221.212 meters, Bearing2->1 =  45.06726 degrees   
+```
+      
+      
 ---   
 
 # PANDAS
 
-### - класс ArcGIS в датафрейм
+### класс ArcGIS в датафрейм
 ```python
-import pandas
-fc = # path to feature class
-df = pandas.DataFrame(
-    arcpy.da.FeatureClassToNumPyArray(
-        fc,
-        [fld.name for fld in arcpy.ListFields(fc) if fld.name != arcpy.Describe(fc).shapeFieldName]
+    import pandas
+    fc = # path to feature class
+    df = pandas.DataFrame(
+        arcpy.da.FeatureClassToNumPyArray(
+            fc,
+            [fld.name for fld in arcpy.ListFields(fc) if fld.name != arcpy.Describe(fc).shapeFieldName]
+        )
     )
-)
 ```    
+    
+### использование arcpy.da.InsertCursor вместо arcpy.da.NumPyArrayToTable    
+```python
+# https://gis.stackexchange.com/questions/221660/numpyarraytotable-runtimeerror-unsupported-time-units-use-m8us   
+# create a feature class
+#...
+# add fields from df.columns
+#...
+
+    rows_to_write = [tuple(r[1:]) for r in df.itertuples()] 
+    with arcpy.da.InsertCursor(out_fc,df.columns) as ins_cur:
+        for row in rows_to_write:
+            ins_cur.insertRow(row)
+```
     
