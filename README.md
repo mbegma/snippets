@@ -453,6 +453,15 @@ def shiftXYCoordinates(shape,angle,distance):
     point.X += distance * math.sin(math.radians(angle))
     return point     
 ```
+
+### сдвиг точки в координаты из полей (X, Y). FieldCalculator на поле SHAPE(move_xy(!SHAPE!, !X! ,!Y!))
+```python
+def move_xy(shape,x,y):
+    point = shape.getPart(0)
+    point.Y = y
+    point.X = x
+    return point     
+```
    
 ### определение расстояний между точками
 ```python
