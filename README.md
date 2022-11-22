@@ -77,6 +77,19 @@ def concat_as_strings(lst: list) -> str:
     datetime_str = <datetime object>.strftime('%Y-%m-%d %H:%M:%S.%f') -> '2019-09-17 15:20:35.123'
 ```
      
+### конвертирование integer timestamp в datetime     
+```python 
+# datetime.datetime.fromtimestamp() is correct, 
+# except you are probably having timestamp in miliseconds (like in JavaScript), 
+# but fromtimestamp() expects Unix timestamp, in seconds.
+    import datetime   
+    your_timestamp = 1669007002000   
+    date = datetime.datetime.fromtimestamp(your_timestamp / 1e3)   
+      
+>> datetime.datetime(2022, 11, 21, 8, 3, 22)
+```
+   
+   
 ### работа с датами в формате ISO-8601 YYYY-MM-DDTHH:mm:ss     
 ```python
    import dateutil.parser
