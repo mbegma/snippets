@@ -118,6 +118,15 @@ def concat_as_strings(lst: list) -> str:
     print(f"Пересечение: {a:.4f}, наклон: {b:.4f}")
     print(f"y = {b:.4f}x + {a:.4f}")
 ```
+
+### форматирование datetime в f-string
+```python   
+    import datetime
+    now = datetime.datetime.now()
+    print(f'{now:%Y-%m-%d %H:%M}')
+    
+    >> 2021-08-20 15:13
+```
    
 ### форматирование в Python 3
 ```python
