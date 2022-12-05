@@ -303,7 +303,35 @@ print(item.total_cost())    # 1200
     with open(<dump_file_name>) as json_file:
         data = json.load(json_file)
 ```
+  
+### функция-декоратор, для определения времени выполнения функции в секундах
+```python
+    import time
+    def time_of_function(function):
+        def wrapped(*args, **kwargs):
+            start_time = time.time()
+            res = function(*args, **kwargs)
+            est_time = time.time() - start_time
+            if est_time < 300:
+                msg = f"{function.__name__} running: {est_time:.4f} sec."
+            else:
+                msg = f"{function.__name__} running: {est_time/60:.4f} min."
+            print(msg)
+            local_log.debug(msg)
+            return res
+        return wrapped
+        
+# использование  
+from <module> import time_of_function 
+
+    @time_of_function
+    def _foo():
+        <....>
+
+    >> foo running: 0.2 sec.        
+```
    
+      
 ---
 ---   
 
