@@ -315,7 +315,7 @@ print(item.total_cost())    # 1200
             if est_time < 300:
                 msg = f"{function.__name__} running: {est_time:.4f} sec."
             else:
-                msg = f"{function.__name__} running: {est_time/60:.4f} min."
+                msg = f"{function.__name__} running: more then {est_time/60:.4f} min. ({est_time} sec.)"
             print(msg)
             local_log.debug(msg)
             return res
