@@ -89,6 +89,14 @@ def concat_as_strings(lst: list) -> str:
 >> datetime.datetime(2022, 11, 21, 8, 3, 22)
 ```
    
+### прибавить к конкретной дате определенное количество дней в datetime     
+```python    
+    import datetime
+    d1 = datetime.datetime.strptime('1900-01-01 00:00:00.1', '%Y-%m-%d %H:%M:%S.%f')
+    d2 = d1 + datetime.timedelta(days=int(d))
+    return d2 
+```
+       
    
 ### работа с датами в формате ISO-8601 YYYY-MM-DDTHH:mm:ss     
 ```python
