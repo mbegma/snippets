@@ -381,7 +381,15 @@ from <module> import time_of_function
                 ['year_start', 'DATE', 'Year Start', None, '2017-08-09 16:05:07', '']
             ])        
 ```   
-
+### блок исключения    
+```python
+    try:
+        <arcpy operation or tools>
+    except (arcpy.ExecuteError, RuntimeError) as err:
+        self._error_message(f"arcpy error: {arcpy.GetMessages(2)}")
+        self._error_message(str(err))
+```
+   
 ### работа с курсорами (Cursor)   
 ```python 
     with arcpy.da.SearchCursor(fc, ['fieldA', 'fieldB']) as cursor:
