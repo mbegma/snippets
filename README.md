@@ -542,6 +542,21 @@ def move_xy(shape,x,y):
     >> Distance = 2221.212 meters, Bearing1->2 = -134.91526 degrees
     >> Distance = 2221.212 meters, Bearing2->1 =  45.06726 degrees   
 ```
+
+### Вывод объектов геометрии
+```python
+    # Выходной объект геометрии можно создать, задав в качестве выхода инструмента геообработки пустой объект геометрии. 
+    # При запуске инструмента с назначением пустого объекта геометрии инструмент возвращает список объектов геометрии. 
+    # В следующем примере инструмент Копировать объекты используется, чтобы вернуть список объектов геометрии, 
+    # которые можно затем зациклить, чтобы накопить общую длину всех объектов
+    
+    import arcpy
+    # Run the CopyFeatures tool, setting the output to a geometry object. Geometries is returned as a list of geometry objects.
+    geometries = arcpy.CopyFeatures_management('c:/temp/outlines.shp', arcpy.Geometry())
+    # Walk through each geometry, totaling the length
+    length = sum([g.length for g in geometries])
+    print('Total length: {}'.format(length)) 
+```
       
       
 ---   
