@@ -558,6 +558,35 @@ def move_xy(shape,x,y):
     print('Total length: {}'.format(length)) 
 ```
       
+### Транслитерация
+```python
+def trans(text):
+    """
+    Функция транслитерирует текст с русского на английский в соответсвии с правилами:
+    https://transliteration.pro/zagranpasport
+    переделано “й”, “ю” и “я”, на соответственно “y”, “yu” и “ya”
+    :param text: текст на русском
+    :return: русский текст транслитерацией а английский
+    """
+    symbols = (
+        "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+        (
+            *list('abvgdee'), 'zh', *list('ziyklmnoprstuf'), 'kh', 'ts', 'ch', 'sh', 'shch', '', 'y', '', 'e', 'yu', 'ya',
+            *list('ABVGDEE'), 'ZH', *list('ZIYKLMNOPRSTUF'), 'Kh', 'Ts', 'Ch', 'Sh', 'Shch', *list('_Y_E'), 'Yu', 'Ya'
+        )
+    )
+    coding_dict = {source: dest for source, dest in zip(*symbols)}
+    ret = ''
+    if text is not None:
+        for letter in text:
+            if letter in coding_dict.keys():
+                ret += coding_dict[letter]
+            else:
+                ret += letter
+    else:
+        ret = None
+    return ret      
+```    
       
 ---   
 
