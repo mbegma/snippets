@@ -339,6 +339,18 @@ from <module> import time_of_function
     >> foo running: 0.2 sec.        
 ```
    
+ ### список файлов в дирректории c определенным расширением
+```python
+    import os
+    list_of_file = []
+    _path = <путь к папке>
+    for root, dirs, files in os.walk(_path):
+        for file in files:
+            if file.endswith('.csv'):
+                list_of_file.append(os.path.join(root, file))
+                log.debug(u'files: {0}'.format(os.path.join(root, file)))
+```
+   
       
 ---
 ---   
