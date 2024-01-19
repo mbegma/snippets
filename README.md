@@ -17,7 +17,9 @@ def do_uniq_values_in_list(lst):
 ### переводим список в строку через запятую   
 ```python
     q_list_str = u"'{0}'".format("', '".join([q for q in q_list]))
-    str_list = f"{', '.join([str(_['num']) for _ in obj_list])}"
+    str_list = f"{', '.join([str(_['num']) for _ in obj_list])}"     
+    lst = ["One", "Two", "Three"]
+    str = f"{', '.join([_ for _ in lst])}
 ```
        
 ### список в условии   
