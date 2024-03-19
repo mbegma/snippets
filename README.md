@@ -116,7 +116,15 @@ def concat_as_strings(lst: list) -> str:
    
 ### строка из datetime
 ```python
-    datetime_str = <datetime object>.strftime('%Y-%m-%d %H:%M:%S.%f') -> '2019-09-17 15:20:35.123'
+    datetime_str = <datetime object>.strftime('%Y-%m-%d %H:%M:%S.%f')   
+    >>> '2019-09-17 15:20:35.123'
+        
+    datetime_str = f'{<datetime object>:%Y-%m-%d %H:%M:%S}'     
+    >>> '2019-09-17 15:20:35.123'   
+         
+    # ISO 8601 формат, YYYY-MM-DDTHH:MM:SS
+    <datetime object>.isoformat() 
+    >>> '2019-09-17T15:20:35.123'
 ```
      
 ### конвертирование integer timestamp в datetime     
