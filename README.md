@@ -59,7 +59,7 @@ set_a.union(set_b)
     q_list_str = u"'{0}'".format("', '".join([q for q in q_list]))
     str_list = f"{', '.join([str(_['num']) for _ in obj_list])}"     
     lst = ["One", "Two", "Three"]
-    str = f"{', '.join([_ for _ in lst])}
+    str = f"{', '.join([_ for _ in lst])}"
 ```
        
 ### список в условии   
@@ -298,6 +298,21 @@ test(a='asdf', b='zxcv')
     finally:
         del iterator 
 ```
+    
+### разбить словарь на части
+```python
+from itertools import islice
+
+def chunks(data, size=10000):
+    it = iter(data)
+    for i in range(0, len(data), size):
+        yield {k: data[k] for k in islice(it, size)}
+      
+# использование:
+for item in chunks({i:i for i in range(10)}, 3):
+   print(item)
+   
+```   
     
 ### кастомный класс ошибки
 ```python    
