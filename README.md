@@ -212,6 +212,7 @@ def tab(n):
 ### сохранение в файл
 ```python
     def save_to_file(file_name, data):
+    # дописывает в файл, если он уже существует (mode = 'a'), перезаписывает - mode = 'w'
         with open(file_name, 'a') as f:
             f.write('{0}\n'.format(data))
             # log_file.write('{0}\n'.format(message.encode('cp1251')))     
