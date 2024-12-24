@@ -1,6 +1,16 @@
 # Python and ArcPy snippets   
    
-## Python  
+## Python   
+   
+### использование pip
+[статья](https://habr.com/ru/articles/806691/)
+```python
+   pip download <название библиотеки> - скачивается библиотека и все зависимости
+
+   pip install --no-index   --find-links <путь куда ты все положил> <твоя либа>
+
+   pip download -r requirements.txt тоже работает
+```
     
 ### создаем список
 ```python
@@ -161,7 +171,15 @@ def concat_as_strings(lst: list) -> str:
    dateutil.parser.isoparse('2022-04-02T04:00:00.001000Z')
    >> {datetime} 2022-04-02 04:00:00.001000+00:00
    
-```   
+```
+      
+      
+### Замена utcnow()
+```python
+from datetime import datetime, timezone
+datetime.now(timezone.utc)
+```  
+     
       
 ### Функция возвращает указанное число табуляций     
 ```python  
