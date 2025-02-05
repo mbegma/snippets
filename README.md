@@ -732,6 +732,16 @@ df.loc[((df['col1'] == 'A') & (df['col2' ] == 'G'))]
 df.loc[((df['col1'] > 10) | (df['col2' ] < 8))]
 ```
 
+### добавление столбца с GUID к DataFrame
+```python
+from uuid import uuid4
+   
+df['id'] = df.apply(lambda _: '{{{0}}}'.format(uuid4()).lower(), axis=1)
+
+df['id'] = df.apply(lambda _: f"{{{str(uuid4()).lower()}}}", axis=1)
+```    
+    
+     
 # POSTGRESQL 
     
 ###  создание БД и пользователя   
