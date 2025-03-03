@@ -1,4 +1,10 @@
-# Python and ArcPy snippets   
+# Snippets   
+   
+- [Python](#python)
+- [ArcGIS ArcPy](#arcgis-arcpy)
+- [Pandas](#pandas)
+- [PostgreSQL](#postgresql)
+
    
 ## Python   
    
@@ -445,9 +451,10 @@ from <module> import time_of_function
    
       
 ---
----   
+[Top](#snippets)     
 
-## ArcPy & ArcGIS   
+   
+## ArcGIS ArcPy 
     
 ### работа с тулбоксом
 ```python    
@@ -692,9 +699,11 @@ def trans(text):
     return ret      
 ```    
       
----   
+---    
+[Top](#snippets)    
 
-# PANDAS
+
+## Pandas
 
 ### класс ArcGIS в датафрейм
 ```python
@@ -741,8 +750,11 @@ df['id'] = df.apply(lambda _: '{{{0}}}'.format(uuid4()).lower(), axis=1)
 df['id'] = df.apply(lambda _: f"{{{str(uuid4()).lower()}}}", axis=1)
 ```    
     
+---    
+[Top](#snippets)    
+    
      
-# POSTGRESQL 
+## POSTGRESQL 
     
 ###  создание БД и пользователя   
 В Postgresql есть приложение psql (командная строка). Но тут стоит учесть, что вход в базу осуществляется (по умолчанию) 
