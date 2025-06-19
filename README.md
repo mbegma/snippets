@@ -17,19 +17,19 @@
 
    pip download -r requirements.txt тоже работает
 ```
-    
+---    
 ### создаем список
 ```python
     q_list = [1, 2, 3]   
     q_list = [str(q) for q in q_list]   
 ``` 
-    
+---    
 ### оставляет в списке, только уникальные значения   
 ```python
 def do_uniq_values_in_list(lst):
     return list(set(lst))
 ```
-    
+---    
 ### сравнение объектов используя intersection()
 ```python
 list_a = ['Вася', 'Петя', 'Саша']
@@ -39,7 +39,7 @@ set_b = set(list_b)
 set_a.intersection(set_b)
 >>> {'Саша'}
 ```    
-     
+---     
 ### получение отличных объектов     
 ```python
 set_a = {'Вася', 'Петя', 'Саша'}
@@ -52,7 +52,7 @@ set_b = {'Лена', 'Катя', 'Саша'}
 set_b.difference(set_a)
 >>> {'Лена', 'Катя'}
 ```
-
+---
 ### уникальные значения в 2х объектах
 ```python
 set_a = {'Вася', 'Петя', 'Саша'}
@@ -60,7 +60,7 @@ set_b = {'Лена', 'Катя', 'Саша'}
 set_a.symmetric_difference(set_b)
 >>> {'Вася', 'Лена', 'Петя', 'Катя'}
 ```
-    
+---    
 ### объединение
 ```python
 set_a = {'Вася', 'Петя', 'Саша'}
@@ -68,8 +68,7 @@ set_b = {'Лена', 'Катя', 'Саша'}
 set_a.union(set_b)
 >>> {'Вася', 'Лена', 'Петя', 'Катя', 'Саша'}
 ```
-    
-    
+---    
 ### переводим список в строку через запятую   
 ```python
     q_list_str = u"'{0}'".format("', '".join([q for q in q_list]))
@@ -77,19 +76,19 @@ set_a.union(set_b)
     lst = ["One", "Two", "Three"]
     str = f"{', '.join([_ for _ in lst])}"
 ```
-       
+---       
 ### список в условии   
 ```python
     wc_zones = u"ID IN ('{0}')".format(u"','".join([id for id in list]))
 ```
-
+---
 ### сцепить список в одну строку
 ```python
     characters = ['p', 'y', 't', 'h', 'o', 'n']
     word = "".join(characters)
     print(word) # python    
 ```    
-   
+---   
 ### создание словаря из известного набора ключей с фиксированым значением   
 ```python
 # you can you use dictionary comprehensions:
@@ -100,36 +99,36 @@ set_a.union(set_b)
     dict.fromkeys(keys, True)
 >>> {'a': True, 'b': True, 'c': True}    
 ```        
-
+---
 ### строка из списка:   
 ```python
     fields_name=', '.join(item for item in [u'ID', u'NAME'])
 ```   
-   
+---   
 ### строка из случайных символов
 ```python
     import string
     import random
     name = ''.join([random.choice(string.ascii_uppercase) for _ in range(6)])   
 ```
-
+---
 ### строка из чисел
 ```python
 def concat_as_numbers(lst: list) -> str:
     return ', '.join(map(str, lst))
 ```
-
+---
 ### строка из строк
 ```python
 def concat_as_strings(lst: list) -> str:
     return ", ".join(map(lambda x: f"'{x}'", lst))
 ```
-   
+---   
 ### datetime из строки
 ```python
     datetime.datetime.strptime('2019-09-17 15:20:35.123', '%Y-%m-%d %H:%M:%S.%f')
 ```
-   
+---   
 ### строка из datetime
 ```python
     datetime_str = <datetime object>.strftime('%Y-%m-%d %H:%M:%S.%f')   
@@ -142,7 +141,7 @@ def concat_as_strings(lst: list) -> str:
     <datetime object>.isoformat() 
     >>> '2019-09-17T15:20:35.123'
 ```
-     
+---     
 ### конвертирование integer timestamp в datetime     
 ```python 
 # datetime.datetime.fromtimestamp() is correct, 
@@ -154,7 +153,7 @@ def concat_as_strings(lst: list) -> str:
       
 >> datetime.datetime(2022, 11, 21, 8, 3, 22)
 ```
-   
+---   
 ### прибавить к конкретной дате определенное количество дней в datetime     
 ```python    
     import datetime
@@ -162,8 +161,7 @@ def concat_as_strings(lst: list) -> str:
     d2 = d1 + datetime.timedelta(days=int(d))
     return d2 
 ```
-       
-   
+---       
 ### работа с датами в формате ISO-8601 YYYY-MM-DDTHH:mm:ss     
 ```python
    import dateutil.parser
@@ -176,17 +174,14 @@ def concat_as_strings(lst: list) -> str:
    
    dateutil.parser.isoparse('2022-04-02T04:00:00.001000Z')
    >> {datetime} 2022-04-02 04:00:00.001000+00:00
-   
 ```
-      
-      
+---      
 ### Замена utcnow()
 ```python
 from datetime import datetime, timezone
 datetime.now(timezone.utc)
 ```  
-     
-      
+---     
 ### Функция возвращает указанное число табуляций     
 ```python  
 def tab(n):
@@ -194,7 +189,7 @@ def tab(n):
     
 >> print (f"{tab(2)} test text")
 ```    
-        
+---        
 ### форматирование строки с лидирующими нулями (только для int)
 ```python
     number = 1
@@ -202,13 +197,13 @@ def tab(n):
     # for Python 3.6+  with f-strings:
     print(f"{number:05d}") -> 00001
 ```
-    
+---    
 ### форматирование floats в f-string
 ```python   
     print(f"Пересечение: {a:.4f}, наклон: {b:.4f}")
     print(f"y = {b:.4f}x + {a:.4f}")
 ```
-
+---
 ### форматирование datetime в f-string
 ```python   
     import datetime
@@ -216,8 +211,34 @@ def tab(n):
     print(f'{now:%Y-%m-%d %H:%M}')
     
     >> 2021-08-20 15:13
-```
-   
+```    
+---   
+### форматирование в f-string
+```python   
+    # Центрирование текста:
+    text = "hello world"
+    print(f"{text:^15}")
+    
+    >> '  hello world  ' 
+    
+    # Установка разделителя групп разрядов
+    number = 1234567890
+    print(f"{number:,}")
+    
+    >> 1,234,567,890   
+       
+    # Добавление начальных нулей
+    number = 123
+    print(f"{number:08}")
+    >> 00000123
+    
+    # вложенные f-строки
+    number = 254.3463
+    print(f"{f'${number:.3f}':>10s}")
+    
+    >> '  $254.346'
+```   
+---   
 ### форматирование в Python 3
 ```python
     print(f"{'Username'}:25}{'Role':20}{'License Type'}")
@@ -225,14 +246,14 @@ def tab(n):
     for user in user_list:
         print(f"{user.username:25}{user.role:20}{user.userLicenseTypeId}")
 ```
-       
+---       
 ### кодировки   
 ```python
     from os import environ
     environ['NLS_LANG'] = 'RUSSIAN_CIS.CL8MSWIN1251'
     environ['NLS_LANG'] = 'American_America.AL32UTF8'    
 ```
-   
+---   
 ### сохранение в файл
 ```python
     def save_to_file(file_name, data):
@@ -241,19 +262,46 @@ def tab(n):
             f.write('{0}\n'.format(data))
             # log_file.write('{0}\n'.format(message.encode('cp1251')))     
 ```   
-   
+---   
 ### работа с именованными (keyword) аргументами   
+[Python args and kwargs: Demystified](https://realpython.com/python-kwargs-and-args/)
 ```python
-# **kwargs (https://realpython.com/python-kwargs-and-args/)
     def test(**kwargs):
         print kwargs['a']
         print kwargs['b']
     
-test(a='asdf', b='zxcv')
->>asdf
->>zxcv
+    test(a='asdf', b='zxcv')
+    >>asdf
+    >>zxcv
 ```
-   
+---      
+### Модуль **typing**
+> Помимо аннотации типов для типизации языка Python используется встроенный модуль **typing**, 
+который предоставляет разработчику дополнительные средства для более точной и продвинутой типизации.    
+Рассмотрим некоторые структуры данных из модуля typing:    
+- Any — представляет неопределенный тип, используется, когда точно неизвестен тип переменной;   
+- Union — позволяет указать несколько возможных типов для переменной;   
+- Optional — указывает, что переменная может иметь значение определенного типа или быть None.    
+```python   
+    from typing import Union, Optional, Any
+
+    def process_data(data: Union[int, str, float, None]) -> Optional[Any]:
+        if data is None:
+            return None
+        if isinstance(data, int):
+            return f"Processed integer: {data * 2}"
+        if isinstance(data, str):
+            return f"Processed string: {data.upper()}"
+        if isinstance(data, float):
+            return f"Processed float: {round(data, 2)}"
+
+    # Примеры использования
+    print(process_data(42))
+    print(process_data("hello"))
+    print(process_data(3.1415926535))
+    print(process_data(None))   
+```
+---   
 ### progress bar
 ```python
     import time
@@ -265,7 +313,7 @@ test(a='asdf', b='zxcv')
             time.sleep(1)
         bar.finish()   
 ```
-   
+---   
 ### еще пример progressbar 
 ```python
     from tqdm import tqdm
@@ -287,7 +335,7 @@ test(a='asdf', b='zxcv')
                 exit(1)
         pbar.close()   
 ```   
-   
+---   
 ### копирование папки с сохранением структуры
 ```python
     def copytree(src, dst, symlinks=False, ignore=None):
@@ -299,7 +347,7 @@ test(a='asdf', b='zxcv')
             else:
                 shutil.copy2(s, d)   
 ```       
-
+---
 ### проверка XML на соответствие схеме    
 ```python        
     try:
@@ -318,7 +366,7 @@ test(a='asdf', b='zxcv')
        if ignore_errors:
         raise lxml.etree.ValidationError("The Config tree is invalid with error message:\n\n" + str(e)) 
 ```
-
+---
 ### работа с итератором
 ```python
     iterator = iter(iterable)
@@ -331,22 +379,21 @@ test(a='asdf', b='zxcv')
     finally:
         del iterator 
 ```
-    
+---    
 ### разбить словарь на части
 ```python
-from itertools import islice
+    from itertools import islice
 
-def chunks(data, size=10000):
-    it = iter(data)
-    for i in range(0, len(data), size):
-        yield {k: data[k] for k in islice(it, size)}
-      
-# использование:
-for item in chunks({i:i for i in range(10)}, 3):
-   print(item)
-   
+    def chunks(data, size=10000):
+        it = iter(data)
+        for i in range(0, len(data), size):
+            yield {k: data[k] for k in islice(it, size)}
+          
+    # использование:
+    for item in chunks({i:i for i in range(10)}, 3):
+       print(item)
 ```   
-    
+---    
 ### кастомный класс ошибки
 ```python    
     class MyCustomError(Exception):
@@ -364,10 +411,10 @@ for item in chunks({i:i for i in range(10)}, 3):
             else:
                 return 'MyCustomError has been raised'
 
-# raise MyCustomError
-raise MyCustomError('We have a problem')
+    # raise MyCustomError
+    raise MyCustomError('We have a problem')
 ```
-   
+---   
 ### пример создания dataclass (Python 3.7 and over)
 ```python
     from dataclasses import dataclass
@@ -382,9 +429,9 @@ raise MyCustomError('We have a problem')
         id: str
         name: str
         sales: List[Sale]
-```
----          
-```python
+
+
+
     from dataclasses import dataclass
 
     @dataclass
@@ -396,10 +443,10 @@ raise MyCustomError('We have a problem')
         def total_cost(self) -> float:
             return self.unit_price * self.quantity
 
-item = InventoryItem(name="", unit_price=12, quantity=100)
-print(item.total_cost())    # 1200
+    item = InventoryItem(name="", unit_price=12, quantity=100)
+    print(item.total_cost())    # 1200
 ```       
-   
+---   
 ### сохранение / загрузка json данных 
 ```python
     import json
@@ -409,7 +456,7 @@ print(item.total_cost())    # 1200
     with open(<dump_file_name>) as json_file:
         data = json.load(json_file)
 ```
-  
+---  
 ### функция-декоратор, для определения времени выполнения функции в секундах
 ```python
     import time
@@ -427,17 +474,17 @@ print(item.total_cost())    # 1200
             return res
         return wrapped
         
-# использование  
-from <module> import time_of_function 
+    # использование  
+    from <module> import time_of_function 
 
-    @time_of_function
-    def _foo():
-        <....>
+        @time_of_function
+        def _foo():
+            <....>
 
-    >> foo running: 0.2 sec.        
+        >> foo running: 0.2 sec.        
 ```
-   
- ### список файлов в дирректории c определенным расширением
+---   
+### список файлов в дирректории c определенным расширением
 ```python
     import os
     list_of_file = []
@@ -449,7 +496,6 @@ from <module> import time_of_function
                 log.debug(u'files: {0}'.format(os.path.join(root, file)))
 ```
    
-      
 ---
 [Top](#snippets)     
 
@@ -466,11 +512,11 @@ from <module> import time_of_function
     import importlib
     importlib.reload(yourmodule)  # force reload of the module 
 ```
-    
+---    
 ### нотации: математическая, геодезическая    
 - X - Долгота (на восток)   
 - Y - Широта (на север)   
-   
+---   
 ### создание полей в feature class или table   
 ```python
     fields = [
@@ -491,7 +537,8 @@ from <module> import time_of_function
                 ['street_number', 'LONG', 'Street Number', None, 35, 'StreetNumDomain'],
                 ['year_start', 'DATE', 'Year Start', None, '2017-08-09 16:05:07', '']
             ])        
-```   
+```  
+---     
 ### блок исключения    
 ```python
     try:
@@ -500,7 +547,7 @@ from <module> import time_of_function
         self._error_message(f"arcpy error: {arcpy.GetMessages(2)}")
         self._error_message(str(err))
 ```
-   
+---   
 ### работа с курсорами (Cursor)   
 ```python 
     with arcpy.da.SearchCursor(fc, ['fieldA', 'fieldB']) as cursor:
@@ -518,14 +565,14 @@ from <module> import time_of_function
         ioid = ins_cursor.insertRow((_id, _user_name, _today, _form_type))
         print(ioid)
 ```  
-   
+---   
 ### удаление записи курсором
 ```python
     with arcpy.da.UpdateCursor(<feature_class>, ["OID@"], where_clause=<condition>) as update_cursor:
         for row in update_cursor:
             update_cursor.deleteRow()
 ```
-   
+---   
 ### проверить есть ли записи в курсоре
 ```python
     if any(arcpy.da.SearchCursor(FeatureClass, fieldnames, where_clause)):
@@ -533,7 +580,7 @@ from <module> import time_of_function
     else:
         нет
 ```    
-
+---
 ### узнать количество записей в курсоре   
 ```python
 # способ 1:
@@ -543,7 +590,7 @@ from <module> import time_of_function
     featureList = [row[0] for row in arcpy.da.SearchCursor(FeatureClass, fieldnames, where_clause) ]
     count = len(featureList)
 ```
-    
+---    
 ### работа с Редактором (Editor)
 ```python
     edit = arcpy.da.Editor(sdeconnection)
@@ -563,22 +610,22 @@ from <module> import time_of_function
         # Cleanup
         arcpy.ClearWorkspaceCache_management()‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍
 ```
-    
-### получение JSON в ArcMap
+---    
+### получение JSON (ArcMap)
 ```python 
     import arcpy
     lyr = 'lyr'
     arcpy.MakeFeatureLayer_management(<Название класса>, lyr)
     arcpy.FeatureSet(lyr).JSON
 ```
-   
+---   
 ### список полей в таблице raw_table
 ```python
     exclude_flds = ['OBJECTID']
     raw_table_flds = [fld.name for fld in arcpy.ListFields(raw_table) if fld.name not in exclude_flds]
     print (raw_table_flds)
 ```
-
+---
 ### расчет в поле автоинкримента (ArcMap)   
 ```python
     rec=0 
@@ -592,54 +639,55 @@ from <module> import time_of_function
             rec += pInterval  
         return rec
 ```
-       
+---       
 ### расчет в поле GUID (ArcMap)    
 ```python
-def calc():
-    from uuid import uuid4
-    return u'{{{0}}}'.format(uuid4()).upper()
+    def calc():
+        from uuid import uuid4
+        return u'{{{0}}}'.format(uuid4()).upper()
 ```
+---    
 ### случайное значение из диапазона (ArcMap)
 ```python
-def get_val(val):
-    import random
-    random_val = random.randint(-10,10)
-    if val != 0:
-        return val + random_val
-    else:
-        return val
-        
-def get_val(val):
-    import random
-    random_val = random.randint(-50000,50000)
-    if val != 0:
-        ret_val = val + random_val
-        if ret_val < 0:
-            return abs(ret_val)
+    def get_val(val):
+        import random
+        random_val = random.randint(-10,10)
+        if val != 0:
+            return val + random_val
         else:
-            return ret_val
-    else:
-        return val
+            return val
+            
+    def get_val(val):
+        import random
+        random_val = random.randint(-50000,50000)
+        if val != 0:
+            ret_val = val + random_val
+            if ret_val < 0:
+                return abs(ret_val)
+            else:
+                return ret_val
+        else:
+            return val
 ```
-   
+---   
 ### сдвиг точки на угол и расстояние FieldCalculator (shiftXYCoordinates(!SHAPE!, !Angle! ,5000))
 ```python
-def shiftXYCoordinates(shape,angle,distance):
-    point = shape.getPart(0)
-    point.Y += distance * math.cos(math.radians(angle))
-    point.X += distance * math.sin(math.radians(angle))
-    return point     
+    def shiftXYCoordinates(shape,angle,distance):
+        point = shape.getPart(0)
+        point.Y += distance * math.cos(math.radians(angle))
+        point.X += distance * math.sin(math.radians(angle))
+        return point     
 ```
-
+---
 ### сдвиг точки в координаты из полей (X, Y). FieldCalculator на поле SHAPE(move_xy(!SHAPE!, !X! ,!Y!))
 ```python
-def move_xy(shape,x,y):
-    point = shape.getPart(0)
-    point.Y = y
-    point.X = x
-    return point     
+    def move_xy(shape,x,y):
+        point = shape.getPart(0)
+        point.Y = y
+        point.X = x
+        return point     
 ```
-   
+---   
 ### определение расстояний между точками
 ```python
     import arcpy
@@ -653,14 +701,11 @@ def move_xy(shape,x,y):
     >> Distance = 2221.212 meters, Bearing1->2 = -134.91526 degrees
     >> Distance = 2221.212 meters, Bearing2->1 =  45.06726 degrees   
 ```
-
+---
 ### Вывод объектов геометрии
+    Выходной объект геометрии можно создать, задав в качестве выхода инструмента геообработки пустой объект геометрии. При запуске инструмента с назначением пустого объекта геометрии инструмент возвращает список объектов геометрии.    
+    В следующем примере инструмент **Копировать объекты** используется, чтобы вернуть список объектов геометрии, которые можно затем зациклить, чтобы накопить общую длину всех объектов
 ```python
-    # Выходной объект геометрии можно создать, задав в качестве выхода инструмента геообработки пустой объект геометрии. 
-    # При запуске инструмента с назначением пустого объекта геометрии инструмент возвращает список объектов геометрии. 
-    # В следующем примере инструмент Копировать объекты используется, чтобы вернуть список объектов геометрии, 
-    # которые можно затем зациклить, чтобы накопить общую длину всех объектов
-    
     import arcpy
     # Run the CopyFeatures tool, setting the output to a geometry object. Geometries is returned as a list of geometry objects.
     geometries = arcpy.CopyFeatures_management('c:/temp/outlines.shp', arcpy.Geometry())
@@ -668,40 +713,39 @@ def move_xy(shape,x,y):
     length = sum([g.length for g in geometries])
     print('Total length: {}'.format(length)) 
 ```
-      
+---      
 ### Транслитерация
 ```python
-def trans(text):
-    """
-    Функция транслитерирует текст с русского на английский в соответсвии с правилами:
-    https://transliteration.pro/zagranpasport
-    переделано “й”, “ю” и “я”, на соответственно “y”, “yu” и “ya”
-    :param text: текст на русском
-    :return: русский текст транслитерацией а английский
-    """
-    symbols = (
-        "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
-        (
-            *list('abvgdee'), 'zh', *list('ziyklmnoprstuf'), 'kh', 'ts', 'ch', 'sh', 'shch', '', 'y', '', 'e', 'yu', 'ya',
-            *list('ABVGDEE'), 'ZH', *list('ZIYKLMNOPRSTUF'), 'Kh', 'Ts', 'Ch', 'Sh', 'Shch', *list('_Y_E'), 'Yu', 'Ya'
+    def trans(text):
+        """
+        Функция транслитерирует текст с русского на английский в соответсвии с правилами:
+        https://transliteration.pro/zagranpasport
+        переделано “й”, “ю” и “я”, на соответственно “y”, “yu” и “ya”
+        :param text: текст на русском
+        :return: русский текст транслитерацией а английский
+        """
+        symbols = (
+            "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            (
+                *list('abvgdee'), 'zh', *list('ziyklmnoprstuf'), 'kh', 'ts', 'ch', 'sh', 'shch', '', 'y', '', 'e', 'yu', 'ya',
+                *list('ABVGDEE'), 'ZH', *list('ZIYKLMNOPRSTUF'), 'Kh', 'Ts', 'Ch', 'Sh', 'Shch', *list('_Y_E'), 'Yu', 'Ya'
+            )
         )
-    )
-    coding_dict = {source: dest for source, dest in zip(*symbols)}
-    ret = ''
-    if text is not None:
-        for letter in text:
-            if letter in coding_dict.keys():
-                ret += coding_dict[letter]
-            else:
-                ret += letter
-    else:
-        ret = None
-    return ret      
+        coding_dict = {source: dest for source, dest in zip(*symbols)}
+        ret = ''
+        if text is not None:
+            for letter in text:
+                if letter in coding_dict.keys():
+                    ret += coding_dict[letter]
+                else:
+                    ret += letter
+        else:
+            ret = None
+        return ret      
 ```    
       
 ---    
 [Top](#snippets)    
-
 
 ## Pandas
 
@@ -716,38 +760,37 @@ def trans(text):
         )
     )
 ```    
-    
-### использование arcpy.da.InsertCursor вместо arcpy.da.NumPyArrayToTable    
+---    
+### использование arcpy.da.InsertCursor вместо arcpy.da.NumPyArrayToTable   
+[ссылка](https://gis.stackexchange.com/questions/221660/numpyarraytotable-runtimeerror-unsupported-time-units-use-m8us)    
 ```python
-# https://gis.stackexchange.com/questions/221660/numpyarraytotable-runtimeerror-unsupported-time-units-use-m8us   
-# create a feature class
-#...
-# add fields from df.columns
-#...
-
+    # create a feature class
+    #...
+    # add fields from df.columns
+    #...
     rows_to_write = [tuple(r[1:]) for r in df.itertuples()] 
     with arcpy.da.InsertCursor(out_fc,df.columns) as ins_cur:
         for row in rows_to_write:
             ins_cur.insertRow(row)
 ```
-    
+---    
 ### выбор строк, которые соответствуют нескольким условиям
 ```python
-df.loc[((df['col1'] == 'A') & (df['col2' ] == 'G'))]
+    df.loc[((df['col1'] == 'A') & (df['col2' ] == 'G'))]
 ```   
-   
+---   
 ### выбор строк, которые соответствуют одному из нескольких условий
 ```python
-df.loc[((df['col1'] > 10) | (df['col2' ] < 8))]
+    df.loc[((df['col1'] > 10) | (df['col2' ] < 8))]
 ```
-
+---
 ### добавление столбца с GUID к DataFrame
 ```python
-from uuid import uuid4
-   
-df['id'] = df.apply(lambda _: '{{{0}}}'.format(uuid4()).lower(), axis=1)
+    from uuid import uuid4
+       
+    df['id'] = df.apply(lambda _: '{{{0}}}'.format(uuid4()).lower(), axis=1)
 
-df['id'] = df.apply(lambda _: f"{{{str(uuid4()).lower()}}}", axis=1)
+    df['id'] = df.apply(lambda _: f"{{{str(uuid4()).lower()}}}", axis=1)
 ```    
     
 ---    
@@ -769,18 +812,44 @@ Postgresql создаёт при установке пользователя pos
 и по умолчанию все базы создаются от него. 
 Также есть небольшой набор команд для администрирования, например, \l - вывести список доступных баз данных. 
 Чтобы создать базу данных необходимо написать стандартную команду SQL:      
-> CREATE DATABASE test_db;     
+> **CREATE DATABASE test_db;**     
     
 , например. Чтобы создать пользователя воспользуйтесь командой:
-> CREATE USER test_user WITH password 'qwerty';     
+> **CREATE USER test_user WITH password 'qwerty';**     
     
-Но на данную базу данных у пользователя не будет прав. Чтобы создать базу с владельцем добавьте опциональный параметр **OWNER**:    
-> CREATE DATABASE test_database OWNER test_user;    
+Но на данную базу данных у пользователя не будет прав.    
+Чтобы создать базу с владельцем добавьте опциональный параметр **OWNER**:    
+> **CREATE DATABASE test_database OWNER test_user;**    
    
 Можно также дать права на базу пользователю командой:    
-> GRANT ALL privileges ON DATABASE test_db TO test_user;     
+> **GRANT ALL privileges ON DATABASE test_db TO test_user;**     
      
 Для удаления базы данных можно воспользоваться командой:     
-> DROP DATABASE test_db;     
+> **DROP DATABASE test_db;**       
+    
+---       
+### Генерация SQL-запросов по шаблонам: jinja2  
+Шаблон SQL содержит переменные, которые заменяются на нужные значения. 
+Код автоматически подставляет параметры и формирует готовый запрос:     
+
+```python
+    from jinja2 import Template
+
+    sql_template = """
+    SELECT * FROM users
+    WHERE age > {{ min_age }}
+    {% if city is not none %}
+    AND city = '{{ city | replace("'", "''") }}'
+    {% endif %}
+    """
+
+    template = Template(sql_template)
+
+    # Пример: если city=None, условие AND city = ... не добавится
+    query = template.render(min_age=25, city="Москва")
+
+    print(query)
+```
+---   
     
     
