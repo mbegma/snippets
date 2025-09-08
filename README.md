@@ -414,6 +414,16 @@ def tab(n):
     # Результат: [[1, 2], [3, 4], [5]]
 ```   
 --- 
+### сортировка списка объектов по атрибуту объекта
+```python
+    orig_list = [Tag(name="toe", count=10), Tag(name="leg", count=2), ...]
+    # сортировка списка
+    orig_list.sort(key=lambda x: x.count, reverse=True)
+    
+    # сортировка в новый список
+    new_list = sorted(orig_list, key=lambda x: x.count, reverse=True)
+```   
+--- 
 
 ### кастомный класс ошибки
 ```python    
