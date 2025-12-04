@@ -4,6 +4,7 @@
 - [ArcGIS ArcPy](#arcgis-arcpy)
 - [Pandas](#pandas)
 - [PostgreSQL](#postgresql)
+- [Docker](#docker)
 
    
 ## Python   
@@ -400,6 +401,23 @@ def tab(n):
        print(item)
 ```   
 ---    
+### функция itertools.product   
+```Python
+    import itertools
+
+    colors = ['Red', 'Black', 'White']
+    sizes = ['S', 'M', 'L']
+    materials = ['Cotton', 'Polyester']
+    # Эквивалент вложенных циклов в одну строку
+    sku_iterator = itertools.product(colors, sizes, materials)
+
+    for item in sku_iterator:
+        print(item) 
+    
+    # Output: ('Red', 'S', 'Cotton'), ('Red', 'S', 'Polyester')...
+```
+---    
+
 ### разделить список на подсписки заданной длины
 ```python
     подсписки = [список[i:i + n] for i in range(0, len(список), n)], где список — ваш исходный список, 
@@ -539,6 +557,34 @@ def tab(n):
 
         >> foo running: 0.2 sec.        
 ```
+---  
+### использование контексного менеджера, для определения времени выполнения функции в секундах
+```python
+    from contextlib import contextmanager
+    import time
+
+    @contextmanager
+    def timer(label: str):
+        start_time = time.time()
+        try:
+            # yield передаёт управление внутрь блока with
+            yield
+        finally:
+            # этот код выполнится после выхода из блока with
+            end_time = time.time()
+            print(f"{label}: выполнено за {end_time - start_time:.4f} секунд")
+
+    # И как это использовать:
+    with timer("Генерация списка"):
+        result = [x**2 for x in range(1000000)]
+
+    with timer("Создание множества"):
+        my_set = {x for x in range(5000000)}
+
+# Вывод:
+# Генерация списка: выполнено за 0.0818 секунд
+# Создание множества: выполнено за 0.2227 секунд       
+```
 ---   
 ### список файлов в дирректории c определенным расширением
 ```python
@@ -551,7 +597,52 @@ def tab(n):
                 list_of_file.append(os.path.join(root, file))
                 log.debug(u'files: {0}'.format(os.path.join(root, file)))
 ```
-   
+---   
+### контекстный менеджер при работе с sqllite
+```python
+    import sqlite3
+
+    # Идеальный вариант
+    try:
+        # Соединение само является менеджером контекста!
+        with sqlite3.connect('test.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO users VALUES (1, "Alice")')
+            # Если здесь произойдет ошибка, транзакция автоматически откатится
+            cursor.execute('INSERT INTO users VALUES (2, "Bob")')
+        # Как только мы вышли из блока with, транзакция закоммичена, а соединение закрыто.
+        print("Пользователи добавлены!")
+    except sqlite3.Error as e:
+        print(f"Произошла ошибка: {e}")
+```
+       
+---
+### пример шаблона основного модуля
+```python
+import argparse
+import logging
+_logger = logging.getLogger(__name__)
+def parse_args(args):
+    """
+    parser = argparse.ArgumentParser(description="Just a Fibonacci demonstration")
+    parser.add_argument("--version", action="version", version="demo-project {ver}".format(ver=__version__),)
+    parser.add_argument(dest="n", help="n-th Fibonacci number", type=int, metavar="INT")
+    parser.add_argument("-v", "--verbose", dest="loglevel", help="set loglevel to INFO", action="store_const", const=logging.INFO,)
+    parser.add_argument("-vv","--very-verbose", dest="loglevel", help="set loglevel to DEBUG", action="store_const", const=logging.DEBUG,)
+    return parser.parse_args(args)
+    
+def setup_logging(loglevel):
+    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
+    logging.basicConfig(level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S")
+    
+def main(args):
+    args = parse_args(args)
+    setup_logging(args.loglevel)
+    _logger.debug("Starting crazy calculations...")
+    print("The {}-th Fibonacci number is {}".format(args.n, fib(args.n)))
+    _logger.info("Script ends here")
+```
+       
 ---
 [Top](#snippets)     
 
@@ -945,5 +1036,67 @@ Postgresql создаёт при установке пользователя pos
     print(query)
 ```
 ---   
+[Top](#snippets)    
     
+     
+## DOCKER    
+    
+### Управление контейнерами: Основные команды    
+* Посмотреть, что запущено: `docker ps`    
+Эта команда — ваш главный инструмент мониторинга. Она показывает список всех активных контейнеров.   
+> увидеть вообще все контейнеры, включая те, что были остановлены, добавьте флаг -a:   
+    ```
+      `docker ps -a`
+    ```      
+    
+* Заглянуть внутрь: `docker logs`   
+Посмотреть логи gunicorn, чтобы увидеть входящие запросы.      
+> Чтобы следить за логами в реальном времени, добавьте флаг -f:   
+    ```
+      docker logs -f my-running-app   
+    ```    
+  Нажмите `Ctrl+C`, чтобы выйти из этого режима.
+   
+* Остановить контейнер: `docker stop`     
+Команда аккуратно посылает контейнеру сигнал о завершении работы, давая ему время корректно остановиться.   
+    ```
+    docker stop my-running-app
+    ```  
+> Терминал вернет вам имя остановленного контейнера. Если вы теперь снова выполните docker ps, список будет пуст. 
+А вот `docker ps -a` покажет ваш контейнер со статусом Exited.
+   
+* Запустить остановленный контейнер: `docker start`   
+Остановленный контейнер никуда не удаляется. Его можно запустить снова:
+    ```
+    docker start my-running-app  
+    ```
+> Он запустится с теми же параметрами, с которыми был создан изначально (с тем же пробросом портов и т.д.).  
+  
+* Удалить контейнер: `docker rm`     
+Когда контейнер вам больше не нужен и вы просто хотите освободить место, его можно удалить.   
+   
+> Важно: Удалить можно только остановленный контейнер.    
+    
+```
+    # Сначала останавливаем, если он еще работает
+    docker stop my-running-app
+
+    # Затем удаляем
+    docker rm my-running-app   
+    
+    # После этого контейнер исчезнет навсегда.  
+```
+   
+> Обратите внимание: удаляется только контейнер, а не образ my-python-app. Вы в любой момент можете создать новый контейнер из этого образа с помощью команды `docker run`.    
+    
+
+### Процесс    
+1. Пересобрать Docker-образ. Дайте ему новый тег, чтобы не затереть старый. 
+Например: `docker build -t my-python-app:v2 . `   
+2. Остановить и удалить старый контейнер (my-running-app), если он еще запущен.     
+3. Запустить новый контейнер из образа `my-python-app:v2`. Не забыть пробросить порты.   
+4. Проверить результат в браузере по адресу http://localhost:8080.   
+    
+---
+[Top](#snippets)   
     
