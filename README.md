@@ -534,11 +534,14 @@ def tab(n):
 ### функция-декоратор, для определения времени выполнения функции в секундах
 ```python
     import time
+    from functools import wraps
+    
     def time_of_function(function):
+        @wraps(function)
         def wrapped(*args, **kwargs):
-            start_time = time.time()
+            start_time = time.time()  # time.perf_counter()
             res = function(*args, **kwargs)
-            est_time = time.time() - start_time
+            est_time = time.time() - start_time  # time.perf_counter() - start_time
             if est_time < 300:
                 msg = f"{function.__name__} running: {est_time:.4f} sec."
             else:
@@ -643,6 +646,56 @@ def main(args):
     _logger.info("Script ends here")
 ```
        
+---
+### паттерн Strategy (вместо if/else)    
+```python
+# пример if/elif
+def calculate_total(price, discount_type):
+    if discount_type == "none":
+        return price
+    elif discount_type == "seasonal":
+        return price * 0.9
+    elif discount_type == "vip":
+        return price * 0.8
+    elif discount_type == "black_friday":
+        return price * 0.5
+    else:
+        raise ValueError("unknown discount type")
+    
+# патерн Strategy    
+def no_discount(price):
+    return price
+
+def seasonal_discount(price):
+    return price * 0.9
+
+def vip_discount(price):
+    return price * 0.8
+
+def black_friday_discount(price):
+    return price * 0.5  
+
+DISCOUNTS = {
+    "none": no_discount,
+    "seasonal": seasonal_discount,
+    "vip": vip_discount,
+    "black_friday": black_friday_discount,
+}
+
+def calculate_total(price, discount_type):
+    try:
+        strategy = DISCOUNTS[discount_type]
+    except KeyError:
+        raise ValueError("unknown discount type")
+
+    return strategy(price)
+# Добавить стратегию? Просто дописать:
+DISCOUNTS["new_year"] = lambda price: price * 0.85  
+   
+# Стратегии можно оформить и классами, если нужно состояние или сложная логика, 
+# но функции проще и подходят в 90% случаев.
+```python
+   
 ---
 [Top](#snippets)     
 
