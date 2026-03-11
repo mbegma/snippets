@@ -1,4 +1,4 @@
-# Snippets   
+# My Snippets   
    
 - [Python](#python)
 - [ArcGIS ArcPy](#arcgis-arcpy)
