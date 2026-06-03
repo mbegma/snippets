@@ -732,8 +732,12 @@ DISCOUNTS["new_year"] = lambda price: price * 0.85
 - **SHAPE@** — Объект geometry (геометрия) для пространственного объекта.
 - **SUBTYPE@** — Целое число кода подтипа.   
      
-     
-     
+### Выражение Arcade для переноса строк с пробелами на несколько строк
+   
+```python   
+    Replace($feature.ANNO, " ", TextFormatting.NewLine)     
+    # $feature.ANNO - поле с текстом
+```     
      
 ### создание полей в feature class или table   
 ```python
