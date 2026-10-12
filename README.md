@@ -76,6 +76,9 @@ set_a.union(set_b)
     str_list = f"{', '.join([str(_['num']) for _ in obj_list])}"     
     lst = ["One", "Two", "Three"]
     str = f"{', '.join([_ for _ in lst])}"
+    
+    # построчно:
+    '\n'.join('  ' + value for value in [...])
 ```
 ---       
 ### список в условии   
